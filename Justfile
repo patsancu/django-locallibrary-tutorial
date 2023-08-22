@@ -34,4 +34,6 @@ run ARGS:
 makemigrations: (run "python manage.py makemigrations")
 migrate: (run "python manage.py migrate")
 run-migrations: makemigrations migrate
+
+generate-schema: (run "python manage.py generateschema --file openapi-schema.yml")
 create-super-user: (run "python manage.py createsuperuser")
