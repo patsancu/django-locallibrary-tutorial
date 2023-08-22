@@ -1,8 +1,50 @@
 from django.shortcuts import render
+from rest_framework import viewsets
 
 # Create your views here.
 
-from .models import Book, Author, BookInstance, Genre
+from .models import Book, Author, BookInstance, Genre, Language
+from .serializers import BookSerializer, GenreSerializer, LanguageSerializer, AuthorSerializer, BookInstanceSerializer
+
+
+class BookViewSet(viewsets.ModelViewSet):
+  """
+  API endpoint that allows books to be viewed or edited.
+  """
+  queryset = Book.objects.all() #.order_by('-date_joined')
+  serializer_class = BookSerializer
+
+
+class GenreViewSet(viewsets.ModelViewSet):
+  """
+  API endpoint that allows genres to be viewed or edited.
+  """
+  queryset = Genre.objects.all() #.order_by('-date_joined')
+  serializer_class = GenreSerializer
+
+
+class LanguageViewSet(viewsets.ModelViewSet):
+  """
+  API endpoint that allows languages to be viewed or edited.
+  """
+  queryset = Language.objects.all() #.order_by('-date_joined')
+  serializer_class = LanguageSerializer
+
+
+class AuthorViewSet(viewsets.ModelViewSet):
+  """
+  API endpoint that allows authors to be viewed or edited.
+  """
+  queryset = Author.objects.all()
+  serializer_class = AuthorSerializer
+
+
+class BookInstanceViewSet(viewsets.ModelViewSet):
+  """
+  API endpoint that allows book instances to be viewed or edited.
+  """
+  queryset = BookInstance.objects.all()
+  serializer_class = BookInstanceSerializer
 
 
 def index(request):
