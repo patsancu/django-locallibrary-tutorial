@@ -24,7 +24,7 @@ class LanguageSerializer(serializers.HyperlinkedModelSerializer):
 class AuthorSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Author
-        fields = ('url', 'first_name', 'last_name',
+        fields = ('url', 'id', 'first_name', 'last_name',
                   'date_of_birth', 'date_of_death')
 
 
