@@ -1,3 +1,15 @@
+from .models import Author
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from catalog.forms import RenewBookForm
+from django.contrib.auth.decorators import login_required, permission_required
+import datetime
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import generic
 from django.shortcuts import render
 from rest_framework import viewsets
 
@@ -8,43 +20,43 @@ from .serializers import BookSerializer, GenreSerializer, LanguageSerializer, Au
 
 
 class BookViewSet(viewsets.ModelViewSet):
-  """
-  API endpoint that allows books to be viewed or edited.
-  """
-  queryset = Book.objects.all() #.order_by('-date_joined')
-  serializer_class = BookSerializer
+    """
+    API endpoint that allows books to be viewed or edited.
+    """
+    queryset = Book.objects.all()  # .order_by('-date_joined')
+    serializer_class = BookSerializer
 
 
 class GenreViewSet(viewsets.ModelViewSet):
-  """
-  API endpoint that allows genres to be viewed or edited.
-  """
-  queryset = Genre.objects.all() #.order_by('-date_joined')
-  serializer_class = GenreSerializer
+    """
+    API endpoint that allows genres to be viewed or edited.
+    """
+    queryset = Genre.objects.all()  # .order_by('-date_joined')
+    serializer_class = GenreSerializer
 
 
 class LanguageViewSet(viewsets.ModelViewSet):
-  """
-  API endpoint that allows languages to be viewed or edited.
-  """
-  queryset = Language.objects.all() #.order_by('-date_joined')
-  serializer_class = LanguageSerializer
+    """
+    API endpoint that allows languages to be viewed or edited.
+    """
+    queryset = Language.objects.all()  # .order_by('-date_joined')
+    serializer_class = LanguageSerializer
 
 
 class AuthorViewSet(viewsets.ModelViewSet):
-  """
-  API endpoint that allows authors to be viewed or edited.
-  """
-  queryset = Author.objects.all()
-  serializer_class = AuthorSerializer
+    """
+    API endpoint that allows authors to be viewed or edited.
+    """
+    queryset = Author.objects.all()
+    serializer_class = AuthorSerializer
 
 
 class BookInstanceViewSet(viewsets.ModelViewSet):
-  """
-  API endpoint that allows book instances to be viewed or edited.
-  """
-  queryset = BookInstance.objects.all()
-  serializer_class = BookInstanceSerializer
+    """
+    API endpoint that allows book instances to be viewed or edited.
+    """
+    queryset = BookInstance.objects.all()
+    serializer_class = BookInstanceSerializer
 
 
 def index(request):
@@ -53,7 +65,8 @@ def index(request):
     num_books = Book.objects.all().count()
     num_instances = BookInstance.objects.all().count()
     # Available copies of books
-    num_instances_available = BookInstance.objects.filter(status__exact='a').count()
+    num_instances_available = BookInstance.objects.filter(
+        status__exact='a').count()
     num_authors = Author.objects.count()  # The 'all()' is implied by default.
 
     # Number of visits to this view, as counted in the session variable.
@@ -68,9 +81,6 @@ def index(request):
                  'num_instances_available': num_instances_available, 'num_authors': num_authors,
                  'num_visits': num_visits},
     )
-
-
-from django.views import generic
 
 
 class BookListView(generic.ListView):
@@ -95,9 +105,6 @@ class AuthorDetailView(generic.DetailView):
     model = Author
 
 
-from django.contrib.auth.mixins import LoginRequiredMixin
-
-
 class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
     """Generic class-based view listing books on loan to current user."""
     model = BookInstance
@@ -113,7 +120,6 @@ class LoanedBooksByUserListView(LoginRequiredMixin, generic.ListView):
 
 
 # Added as part of challenge!
-from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 class LoanedBooksAllListView(PermissionRequiredMixin, generic.ListView):
@@ -127,14 +133,7 @@ class LoanedBooksAllListView(PermissionRequiredMixin, generic.ListView):
         return BookInstance.objects.filter(status__exact='o').order_by('due_back')
 
 
-from django.shortcuts import get_object_or_404
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-import datetime
-from django.contrib.auth.decorators import login_required, permission_required
-
 # from .forms import RenewBookForm
-from catalog.forms import RenewBookForm
 
 
 @login_required
@@ -171,11 +170,6 @@ def renew_book_librarian(request, pk):
     return render(request, 'catalog/book_renew_librarian.html', context)
 
 
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
-from .models import Author
-
-
 class AuthorCreate(PermissionRequiredMixin, CreateView):
     model = Author
     fields = ['first_name', 'last_name', 'date_of_birth', 'date_of_death']
@@ -185,7 +179,8 @@ class AuthorCreate(PermissionRequiredMixin, CreateView):
 
 class AuthorUpdate(PermissionRequiredMixin, UpdateView):
     model = Author
-    fields = '__all__' # Not recommended (potential security issue if more fields added)
+    # Not recommended (potential security issue if more fields added)
+    fields = '__all__'
     permission_required = 'catalog.can_mark_returned'
 
 

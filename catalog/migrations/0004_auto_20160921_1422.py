@@ -15,6 +15,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='book',
             name='summary',
-            field=models.TextField(help_text='Enter a brief description of the book', max_length=1000),
+            field=models.TextField(
+                help_text='Enter a brief description of the book', max_length=1000),
         ),
     ]

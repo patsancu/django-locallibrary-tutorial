@@ -19,7 +19,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='subject',
             name='name',
-            field=models.CharField(default='Fantasy', help_text='Enter a book category - e.g. Science Fiction, French Poetry etc.', max_length=200),
+            field=models.CharField(
+                default='Fantasy', help_text='Enter a book category - e.g. Science Fiction, French Poetry etc.', max_length=200),
             preserve_default=False,
         ),
     ]

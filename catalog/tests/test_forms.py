@@ -16,7 +16,8 @@ class RenewBookFormTest(TestCase):
 
     def test_renew_form_date_too_far_in_future(self):
         """Test form is invalid if renewal_date more than 4 weeks from today."""
-        date = datetime.date.today() + datetime.timedelta(weeks=4) + datetime.timedelta(days=1)
+        date = datetime.date.today() + datetime.timedelta(weeks=4) + \
+            datetime.timedelta(days=1)
         form = RenewBookForm(data={'renewal_date': date})
         self.assertFalse(form.is_valid())
 

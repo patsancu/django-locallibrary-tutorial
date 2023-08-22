@@ -17,6 +17,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='language',
             name='name',
-            field=models.CharField(help_text="Enter the book's natural language (e.g. English, French, Japanese etc.)", max_length=200),
+            field=models.CharField(
+                help_text="Enter the book's natural language (e.g. English, French, Japanese etc.)", max_length=200),
         ),
     ]

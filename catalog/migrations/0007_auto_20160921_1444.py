@@ -15,7 +15,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='author',
             name='date_of_birth',
-            field=models.DateField(blank=True, null=True, verbose_name='D.O.B'),
+            field=models.DateField(blank=True, null=True,
+                                   verbose_name='D.O.B'),
         ),
         migrations.AlterField(
             model_name='author',

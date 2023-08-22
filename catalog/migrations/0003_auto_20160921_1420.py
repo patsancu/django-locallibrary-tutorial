@@ -15,11 +15,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='book',
             name='summary',
-            field=models.TextField(help_text='Enter a brief description of the book', max_length=200),
+            field=models.TextField(
+                help_text='Enter a brief description of the book', max_length=200),
         ),
         migrations.AlterField(
             model_name='subject',
             name='subject_name',
-            field=models.CharField(help_text='Enter a book category - e.g. Science Fiction, Non Fiction etc.', max_length=200),
+            field=models.CharField(
+                help_text='Enter a book category - e.g. Science Fiction, Non Fiction etc.', max_length=200),
         ),
     ]
